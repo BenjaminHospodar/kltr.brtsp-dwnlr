@@ -1,11 +1,19 @@
 ﻿# Download-Extension
 
-TODO:
-make buttons mirror brightspace buttons
-fix download with solution on laptop
-add website bindings 
-transition to workers 
-seperate to callable scripts 
-make popup pretty
-check manifest perms
-gracefull error handling 
+# TODO:
+
+## High
+- [ ] Fix download with solution on laptop
+- [ ] Add website bindings
+- [ ] Transition to workers
+
+## Med 
+- [ ] Check manifest permissions
+- [ ] Graceful error handling
+- [ ] Separate to callable scripts
+
+## Low 
+- [ ] Make buttons mirror Brightspace buttons
+- [ ] Make popup pretty
+- [ ] Graceful error handling
+
