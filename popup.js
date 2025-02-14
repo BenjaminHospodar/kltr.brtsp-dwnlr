@@ -12,55 +12,78 @@ document.getElementById("download").addEventListener("click", async () => {
   currentTabId = tab.id;
 
   try {
-
-    //TODO have a reload that will load everything before playing
-    //await chrome.tabs.reload(currentTabId);
-    
-    
-    //chrome.tabs.executeScript(currentTabId, {file: "backround.js"});
-    
-
     // Attach the debugger to the tab
     await chrome.debugger.attach({ tabId: currentTabId }, "1.3");
     debugging = true;
     document.getElementById("download").disabled = true;
 
     // Enable network monitoring
-    await chrome.debugger.sendCommand({ tabId: currentTabId }, "Network.enable");
+    await chrome.debugger.sendCommand(
+      { tabId: currentTabId },
+      "Network.enable"
+    );
 
     // Listen to network events
     chrome.debugger.onEvent.addListener(async (source, method, params) => {
-      if ((source.tabId === currentTabId && method === "Network.responseReceived")) {
-        const {url} = await params.response;
-        if(url.includes("cfvod")){
-          const cleanUrl = url.substring(0, url.indexOf('?')).replace('scf/hls/', '');
+      if (
+        source.tabId === currentTabId &&
+        method === "Network.responseReceived"
+      ) {
+        const { url } = await params.response;
+        if (url.includes("cfvod")) {
+          const cleanUrl = url
+            .substring(0, url.indexOf("?"))
+            .replace("scf/hls/", "");
           logMessage(`the juice: ${cleanUrl}`);
-  
-          try {
-            // Fetch and create a Blob
-            const response = await fetch(cleanUrl);
-            const blob = await response.blob();
-            const blobUrl = URL.createObjectURL(blob);
 
-            // Download the file
-            chrome.downloads.download(
-              {
-                url: blobUrl,
-                filename: "downloaded_video.mp4",
-              },
-              (downloadId) => {
-                if (chrome.runtime.lastError) {
-                  logMessage(`Error: ${chrome.runtime.lastError.message}`);
-                } else {
-                  logMessage(`Download initiated with ID: ${downloadId}`);
-                }
-              }
-            );
-          } catch (error) {
-            console.error("Error downloading file:", error);
-          }
-          
-  
+          chrome.scripting.executeScript({
+            target: { tabId: currentTabId },
+            args: [cleanUrl],
+            func: (cleanUrl) => {
+              const ltiLaunch =
+                document.querySelector("d2l-lti-launch").shadowRoot;
+
+              //console.log(cleanUrl);
+
+              // Create a download button
+              const downloadButton = document.createElement("button");
+              downloadButton.textContent = "Download";
+              downloadButton.style.backgroundColor = "#0073e6";
+              downloadButton.style.color = "#ffffff";
+              downloadButton.style.border = "none";
+              downloadButton.style.padding = "10px 20px";
+              downloadButton.style.borderRadius = "5px";
+              downloadButton.style.cursor = "pointer";
+
+              downloadButton.params = cleanUrl;
+
+              downloadButton.addEventListener("click", async (evt) => {
+                // Fetch and create a Blob
+                const response = await fetch(evt.currentTarget.params);
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+
+                // Download the file
+                chrome.downloads.download(
+                  {
+                    url: blobUrl,
+                    filename: filename
+                  },
+                  (downloadId) => {
+                    if (chrome.runtime.lastError) {
+                      logMessage(`Error: ${chrome.runtime.lastError.message}`);
+                    } else {
+                      logMessage(`Download initiated with ID: ${downloadId}`);
+                    }
+                  }
+                );
+              });
+
+              // Append the button to the shadow DOM
+              ltiLaunch.appendChild(downloadButton);
+            }
+          });
+
           try {
             // Detach the debugger
             await chrome.debugger.detach({ tabId: currentTabId });
@@ -71,7 +94,6 @@ document.getElementById("download").addEventListener("click", async () => {
           } catch (error) {
             console.error("Error detaching debugger:", error);
           }
-
         }
       }
     });
@@ -82,7 +104,7 @@ document.getElementById("download").addEventListener("click", async () => {
   }
 });
 
-//can remove later, for debugging 
+//can remove later, for debugging
 function logMessage(message) {
   const output = document.getElementById("output");
   const entry = document.createElement("div");
@@ -92,9 +114,11 @@ function logMessage(message) {
 }
 
 function playVideo() {
-  document.getElementById("kplayer").play();
-}
-
-function pauseVideo() {
-  document.getElementsByClassName('btn comp playPauseBtn display-high icon-pause')[0].click();
+  chrome.scripting.executeScript({
+    target: { tabId: currentTabId },
+    func: () => {
+      document.getElementById("kplayer").play();
+      //document.getElementsByClassName('btn comp playPauseBtn display-high icon-play')[0].click();
+    }
+  });
 }
