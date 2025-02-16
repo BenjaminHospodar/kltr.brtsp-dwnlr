@@ -3,8 +3,14 @@
   "name": "Brightspace Downloader",
   "version": "1.0",
   "description": "Downloaded Lectures on brightspace",
-  "permissions": ["scripting","activeTab","tabs","downloads","debugger"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "scripting",
+    "activeTab",
+    "tabs",
+    "debugger",
+    "declarativeContent"
+  ],
+  "host_permissions": ["https://brightspace.carleton.ca/d2l/le/content/*"],
   "background": {
     "service_worker": "background.js"
   },
@@ -13,11 +19,5 @@
     "default_icon": {
       "128": "icon128.png"
     }
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["popup.js"]
-    }
-  ]
+  }
 }
