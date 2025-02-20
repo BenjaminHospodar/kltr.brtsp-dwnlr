@@ -3,18 +3,20 @@
 # TODO:
 
 ## High
-- [ ] Fix download with solution on laptop
-- [ ] Add website bindings
-- [ ] Transition to workers
 
-## Med 
+- [ ] Transition to workers\*\*
+- [ ] Fix all this garbage, need to go through contexts
+- [ ] NEED TO OVERHAUL, contexts are all wrong with transition to backround, fine comb.
+- [ ] swap func to content script
+
+## Med
+
 - [ ] Check manifest permissions
 - [ ] Graceful error handling
-- [ ] Separate to callable scripts
 
-## Low 
+## Low
+
 - [ ] Make buttons mirror Brightspace buttons
 - [ ] Make popup pretty
 - [ ] Graceful error handling
 - [ ] make github pretty
-
