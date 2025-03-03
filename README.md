@@ -16,7 +16,6 @@
 
 ## Low
 
-- [ ] Make buttons mirror Brightspace buttons
 - [ ] Make popup pretty
 - [ ] Graceful error handling
 - [ ] make github pretty
