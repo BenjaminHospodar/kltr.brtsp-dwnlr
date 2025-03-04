@@ -4,18 +4,17 @@
 
 ## High
 
-- [ ] Transition to workers\*\*
-- [ ] Fix all this garbage, need to go through contexts
-- [ ] NEED TO OVERHAUL, contexts are all wrong with transition to backround, fine comb.
-- [ ] swap func to content script
+- [x] Transition to workers\*\*
+- [x] Fix all this garbage, need to go through contexts
+- [x] NEED TO OVERHAUL, contexts are all wrong with transition to backround, fine comb.
+- [x] swap func to content script
 
 ## Med
 
-- [ ] Check manifest permissions
+- [x] Check manifest permissions
 - [ ] Graceful error handling
 
 ## Low
 
 - [ ] Make popup pretty
-- [ ] Graceful error handling
 - [ ] make github pretty
