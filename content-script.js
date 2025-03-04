@@ -5,7 +5,8 @@ function injectSniffButton() {
   if (
     document.querySelector(
       ".d2l-documentToPdfViewer.d2l-documentToPdfViewer-inline"
-    )
+    ) ||
+    document.getElementById("Instructions")
   ) {
     return;
   }
@@ -19,9 +20,19 @@ function injectSniffButton() {
       if (existingButton) existingButton.remove();
 
       const sniffButton = document.createElement("button");
-      sniffButton.textContent = "Sniff";
       sniffButton.setAttribute("type", "button");
-      sniffButton.classList.add("d2l-button", "sniffer-btn");
+      sniffButton.classList.add("d2l-button");
+
+      const iconSpan = document.createElement("span");
+      const iconImg = document.createElement("img");
+      iconImg.src =
+        "https://s.brightspace.com/lib/bsi/2025.2.233/images/tier1/download.svg";
+      iconImg.alt = "Download Icon";
+
+      iconSpan.appendChild(iconImg);
+      sniffButton.appendChild(iconSpan);
+      sniffButton.appendChild(document.createTextNode("Sniff"));
+      document.body.appendChild(sniffButton);
 
       sniffButton.addEventListener("click", () => {
         console.log("Sending message to background script");
