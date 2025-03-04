@@ -1,17 +1,20 @@
 function injectSniffButton() {
   const contentView = document.querySelector("#ContentView");
 
-  console.log("Content view loaded.");
+  //to fix case of showing sniff button in pdf viewer
+  if (
+    document.querySelector(
+      ".d2l-documentToPdfViewer.d2l-documentToPdfViewer-inline"
+    )
+  ) {
+    return;
+  }
 
   if (contentView) {
-    console.log("Content view valid.");
-
     const children = Array.from(contentView.parentElement.children);
     const nextElement = children[children.indexOf(contentView) + 1];
 
     if (nextElement) {
-      console.log("next element valid.");
-
       const existingButton = nextElement.querySelector(".sniffer-btn");
       if (existingButton) existingButton.remove();
 
