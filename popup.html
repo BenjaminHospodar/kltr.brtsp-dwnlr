@@ -1,19 +1,87 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Downloader</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 10px;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <h1>Carleton Video Downloader</h1>
-  <button id="download">Download</button>
-  <div id="output" style="text-align: left; margin-top: 10px; max-height: 200px; overflow-y: auto;"></div>
-  <script src="popup.js"></script>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carleton Video Downloader</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 15px;
+        text-align: center;
+        width: 300px;
+        background-color: #f4f4f4;
+      }
+
+      h1 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 14px;
+        color: #333;
+        text-align: justify;
+      }
+
+      .github-link {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 10px;
+        transition: background 0.3s;
+      }
+
+      .github-link:hover {
+        background-color: #0056b3;
+      }
+
+      .output-container {
+        text-align: left;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        max-height: 200px;
+        overflow-y: auto;
+        font-size: 12px;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Carleton Video Downloader</h1>
+    <p>
+      This Chrome extension allows you to download video lectures from
+      Brightspace at Carleton University.
+    </p>
+
+    <div class="output-container" id="output">
+      <strong>How it works:</strong>
+      <ul>
+        <li>Navigate to a Brightspace lecture page.</li>
+        <li>Click the "Sniff" button added to the page.</li>
+        <li>If not visable reload page.</li>
+        <li>play the video/Lecture you want to download</li>
+        <li>A "Download" button will appear next to the video.</li>
+        <li>Click the "Download" button to save the lecture.</li>
+        <li>If any issues occur, please contact on github</li>
+      </ul>
+    </div>
+
+    <a
+      class="github-link"
+      href="https://github.com/BenjaminHospodar/kltr.brtsp-dwnlr"
+      target="_blank"
+    >
+      View on GitHub
+    </a>
+
+    <script src="popup.js"></script>
+  </body>
 </html>
