@@ -6,7 +6,8 @@ function injectSniffButton() {
     document.querySelector(
       ".d2l-documentToPdfViewer.d2l-documentToPdfViewer-inline"
     ) ||
-    document.getElementById("Instructions")
+    document.getElementById("Instructions") ||
+    document.querySelector("d2l-fileviewer")
   ) {
     return;
   }
@@ -26,7 +27,7 @@ function injectSniffButton() {
       const iconSpan = document.createElement("span");
       const iconImg = document.createElement("img");
       iconImg.src =
-        "https://s.brightspace.com/lib/bsi/2025.2.233/images/tier1/download.svg";
+        "https://s.brightspace.com/lib/bsi/2025.2.233/images/tier1/assignments.svg";
       iconImg.alt = "Download Icon";
 
       iconSpan.appendChild(iconImg);
@@ -37,6 +38,7 @@ function injectSniffButton() {
       sniffButton.addEventListener("click", () => {
         console.log("Sending message to background script");
 
+        //buggy with mult extention, swap to storage
         chrome.runtime.sendMessage({ action: "download" }, (response) => {
           if (chrome.runtime.lastError) {
             console.error("Message sending failed:", chrome.runtime.lastError);
